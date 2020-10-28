@@ -16,6 +16,10 @@ we shouldn't have any collisions though.
 
 The driver gives a quick run down of how everything works in code
 
+Can probably add more to calendar to make it easier to use like
+getEventsForMonth or day and so on so you aren't with doing
+manual calculations on Date objcets
+
 run:
 
 make
