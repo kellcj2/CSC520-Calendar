@@ -7,7 +7,7 @@ JC = javac
 # install "javafx 11" from https://gluonhq.com/products/javafx/
 # NEED TO UNCOMMENT LINE BELOW and replace with path to javafx lib directory
 
-#JAVAFX = javafx-sdk-11.0.2/lib
+JAVAFX = javafx-sdk-11.0.2/lib
 
 # -------------------------------------
 
@@ -26,7 +26,7 @@ CLASSES = \
 	Calendar/Event.java\
 	Calendar/Calendar.java\
 	Display.java\
-#ClassDriver.java\
+    ClassDriver.java\
 
 #Set default target for make
 default: classes

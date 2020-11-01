@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
-
+import java.time.LocalDate;
+import java.time.DayOfWeek;
+import java.util.Collections;
 
 public class Calendar {
 	private HashMap<Integer, Event> events;
@@ -48,10 +50,78 @@ public class Calendar {
 		return events.get(eventId);
 	}
 
-	public ArrayList<Event>getAllEvents() {
+	public ArrayList<Event> getAllEvents() {
 		return new ArrayList<Event>(this.events.values()); 
 	}
+	
+	//Gets events for a 7 day period specified by the month and day.
+	public ArrayList<Event> getWeekOfEventsFor(int month, int day) {
+		assert (month < 0 && month > 12) : "Day or Month not within Range";
 
+		LocalDate dateSpecified = LocalDate.of(LocalDate.now().getYear(), month, day); 
+
+		//get map of DAY -> Integer
+		Map<DayOfWeek, Integer> DAY_MAP = this.getDayMap();
+
+		LocalDate sunday = dateSpecified.minusDays(DAY_MAP.get(dateSpecified.getDayOfWeek()));
+		LocalDate nextSaturday = sunday.plusDays(6);
+		System.out.println(sunday);
+
+		ArrayList<Event> eventsThisWeek = new ArrayList<Event>();
+
+		//iterate through list and add any dates between sun and nextsat
+		for(Event e: this.getAllEvents()) {
+			int currentDay = e.date.getDayOfMonth();
+			int currentMonth = e.date.getMonthValue();
+			if(currentDay >= sunday.getDayOfMonth() && currentDay <= nextSaturday.getDayOfMonth()
+					&& currentMonth == month) {
+				eventsThisWeek.add(e);
+			}
+		}
+
+		//garbage bb sort
+		//sort by day
+		for(int i = 0; i < eventsThisWeek.size(); i++) {
+			for(int m = 0; m < eventsThisWeek.size(); m++) {
+				if(eventsThisWeek.get(i).date.getDayOfMonth() < eventsThisWeek.get(m).date.getDayOfMonth()) {
+					Event temp = eventsThisWeek.get(i);	
+					eventsThisWeek.set(i, eventsThisWeek.get(m));	
+					eventsThisWeek.set(m, temp);	
+				}
+			} 
+		}
+	
+		return eventsThisWeek; 
+	}	
+	
+	//Get all events for month value specified between range 1-12 inclusive
+	public ArrayList<Event> getEventsForMonth(int month) {
+		assert (month < 0 && month > 12) : "Day or Month not within Range";
+
+		LocalDate now = LocalDate.now();
+		ArrayList<Event> eventsThisMonth = new ArrayList<Event>();
+		for(Event e : this.getAllEvents()) {
+			if(e.date.getMonthValue() == month) {
+				eventsThisMonth.add(e);
+			}
+		}
+			
+		//sort	
+		for(int i = 0; i < eventsThisMonth.size(); i++) {
+			for(int m = 0; m < eventsThisMonth.size(); m++) {
+				if(eventsThisMonth.get(i).date.getDayOfMonth() < eventsThisMonth.get(m).date.getDayOfMonth()) {
+					Event temp = eventsThisMonth.get(i);	
+					eventsThisMonth.set(i, eventsThisMonth.get(m));	
+					eventsThisMonth.set(m, temp);	
+				}
+			} 
+		}
+		return eventsThisMonth;
+	}
+
+	public ArrayList<Event> getEventsForMonth() {
+		return this.getEventsForMonth(LocalDate.now().getMonthValue());
+	}
 	public HashMap<Integer, Event> getAllEventsHashMap() {
 		return this.events;
 	}
@@ -67,6 +137,18 @@ public class Calendar {
 
 	public int getNumEvents() {
 		return this.events.size();
+	}
+
+	private Map<DayOfWeek, Integer> getDayMap() {
+		return Map.of(
+			DayOfWeek.SUNDAY, 0,
+			DayOfWeek.MONDAY, 1,
+			DayOfWeek.TUESDAY, 2,
+			DayOfWeek.WEDNESDAY, 3,
+			DayOfWeek.THURSDAY, 4,
+			DayOfWeek.FRIDAY, 5,
+			DayOfWeek.SATURDAY, 6
+		);	
 	}
 }
 
