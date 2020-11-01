@@ -48,8 +48,12 @@ public class Calendar {
 		return events.get(eventId);
 	}
 
-	public List<Event>getAllEvents() {
+	public ArrayList<Event>getAllEvents() {
 		return new ArrayList<Event>(this.events.values()); 
+	}
+
+	public HashMap<Integer, Event> getAllEventsHashMap() {
+		return this.events;
 	}
 
 	public void printEvents() {

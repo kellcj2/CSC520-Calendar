@@ -1,23 +1,28 @@
 package Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import java.util.Random;
 public class Event {
 	public String name;
 	public String description;	
-	public Date dateTime;
+	public LocalDate date;
+	public LocalTime time;
 	private int id;
 	
 	public Event() {
 		this.name = "Default Event Name";
-		this.description = "";
-		this.dateTime = new Date();
+		this.description = "default description";
+		this.date = LocalDate.now();
+		this.time = LocalTime.now();
 		this.id = this.generateRandomId(); 
 	}
 	
-	public Event(String name, String desc, Date dt) {
+	public Event(String name, String desc, LocalDate d, LocalTime t) {
 		this.name = name;
 		this.description = desc;
-		this.dateTime = dt;
+		this.date = d;
+		this.time = t;
 		this.id = this.generateRandomId();
 	}
 	
@@ -29,8 +34,12 @@ public class Event {
 		return this.description;
 	}
 
-	public Date getDateTime() {
-		return this.dateTime;
+	public LocalDate getDate() {
+		return this.date;
+	}
+
+	public LocalTime getTime() {
+		return this.time;
 	}
 
 	public int getId() {
@@ -45,15 +54,19 @@ public class Event {
 		this.description = desc;
 	}
 
-	public void setDate(Date dt) {
-		this.dateTime = dt;
+	public void setDate(LocalDate d) {
+		this.date = d;
+	}
+
+	public void setTime(LocalTime t) {
+		this.time = t;
 	}
 	
 	public String toString() {
 		String truncatedDescription = this.getDescription()
 						.substring(0, Math.min(this.getDescription().length(), 10));
 		return "[Event Id:" + this.getId() + ", Event Name:" + this.getName() + 
-			   ",  Date:" + this.dateTime.toString() + ", Desc Truncated: " +
+			   ",  Date:" + this.date + ", Desc Truncated: " +
 			  	truncatedDescription + " ]"; 
 	}
 
