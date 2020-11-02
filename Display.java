@@ -99,7 +99,7 @@ public class Display extends Application {
 		String eventName = "", eventDesc = "";
 		LocalDate eventDate = null;
 		LocalTime eventTime = null;
-p		
+		
 		GridPane gp = new GridPane();
 		gp.setAlignment(Pos.CENTER);
 		gp.setPrefWidth(400);
