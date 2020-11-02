@@ -14,17 +14,17 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.collections.ObservableList;
 
-import javafx.scene.text.Font;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.GridPane;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ComboBox;
+import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
+import javafx.geometry.Pos;
 
 public class Display extends Application {
 	private static Calendar cal;
@@ -41,20 +41,35 @@ public class Display extends Application {
 					Scene addScene = addModifyEvent(stage, -1);
 					stage.setScene(addScene);
 					stage.show();
-				} 
+				}
 			};
-		
+
+		// handler for "Modify Event" button, get eventId from button's userdata
 		EventHandler<ActionEvent> modifyEvent = new EventHandler<ActionEvent>() {
 				@Override 
 				public void handle(ActionEvent e) {
 					Object o = e.getSource();
 					if(o instanceof Button) {
-						int id = ((int)((Button) o).getUserData());
+						int id = ((int)((Button) o).getUserData()); // get id from button
 						Scene modScene = addModifyEvent(stage, id);
 						stage.setScene(modScene);
 						stage.show();
 					}
 				}				
+			};
+
+		// handler for viewing specific event
+		EventHandler<ActionEvent> viewEventButton = new EventHandler<ActionEvent>() {
+				@Override 
+				public void handle(ActionEvent e) {
+					Object o = e.getSource();
+					if(o instanceof Button) {
+						int id = ((int)((Button) o).getUserData()); // get id from button
+						Scene viewScene = viewEvent(stage, id);
+						stage.setScene(viewScene);
+						stage.show();
+					}					
+				}
 			};
 
 		addButton.setOnAction(addEvent);
@@ -73,10 +88,17 @@ public class Display extends Application {
 			lName.setFont(new Font("Arial", 18));
 			Label lDate = new Label(ev.getDate().format(f));
 			Label lTime = new Label(ev.getTime().toString());
+
 			Button modify = new Button("Modify");
-			modify.setUserData(ev.getId()); // keep track of event id
+			modify.setUserData(ev.getId()); // keep track of event id in button
 			modify.setOnAction(modifyEvent);
-			root.addRow(i+1, lName, lDate, lTime, modify); // add this event to root
+
+			Button view = new Button("View");
+			view.setUserData(ev.getId());
+			view.setOnAction(viewEventButton);
+
+			// add this event to root
+			root.addRow(i+1, lName, lDate, lTime, view, modify);
 		}
 		
 		return new Scene(root, 600, 600);		
@@ -91,7 +113,7 @@ public class Display extends Application {
 	   Return: a Scene for adding / modifying events			          
 	 */
 	private Scene addModifyEvent(Stage stage, int id) {
-		final Event modEvent = cal.getAllEventsHashMap().get(id);
+		final Event modEvent = cal.getEvent(id);
 		Button submit, delete;
 		TextField name, desc;
 		DatePicker datePicker;
@@ -144,7 +166,7 @@ public class Display extends Application {
 			}
 		}
 		
-		// Confirm button handler, verify non-empty, go to Show Events Scene
+		// "Confirm" button handler: verify non-empty, go to Show Events Scene
 		EventHandler<ActionEvent> confirm = new EventHandler<ActionEvent>() { 
 				@Override 
 				public void handle(ActionEvent e) {
@@ -197,10 +219,11 @@ public class Display extends Application {
 				}
 			};
 		
-		delete = new Button("Delete Event");				
+		delete = new Button("Delete Event");
+		// handle button events
 		submit.setOnAction(confirm);
 		delete.setOnAction(deleteAction);
-		
+		// add rows to GridPane
 		gp.addRow(0, new Label("Event Name:"), name);
 		gp.addRow(1, new Label("Description:"), desc);
 		gp.addRow(2, new Label("Date:"), datePicker);
@@ -208,12 +231,47 @@ public class Display extends Application {
 		gp.addRow(4, new Label("Minute:"), minutes);
 		gp.addRow(5, new Label("AM/PM:"), ampm);
 		gp.addRow(6, submit, error);
-		if(id != -1)
+		if(id != -1) // only delete if modifying existing event
 			gp.addRow(7, delete);
 
 		return new Scene(gp, 600, 600);
 	}
 
+	
+	private Scene viewEvent(Stage stage, int id) {
+		final Event event = cal.getEvent(id);
+		GridPane gp = new GridPane();
+		gp.setAlignment(Pos.CENTER);
+		gp.setHgap(40);
+		gp.setVgap(10);
+		
+		Button goBack = new Button("Go Back");
+		EventHandler<ActionEvent> backToShowEvents = new EventHandler<ActionEvent>() { 
+				@Override 
+				public void handle(ActionEvent e) {
+					Scene sEvents = showEvents(stage); // go back to "Show Events"
+					stage.setScene(sEvents);
+					stage.show();
+				}
+			};
+
+		goBack.setOnAction(backToShowEvents); // handle button
+
+		// add event details to GridPane
+		gp.addRow(0, new Label("Event Name:"),
+				  new Label(event.getName()));
+		gp.addRow(1, new Label("Description:"),
+				  new Label(event.getDescription()));
+		gp.addRow(2, new Label("Date:"),
+				  new Label(event.getDate().toString()));
+		gp.addRow(3, new Label("Time:"),
+				  new Label(event.getTime().toString()));
+		gp.addRow(4, goBack);
+		
+		return new Scene(gp, 600, 600);
+	}
+	
+	
 	@Override
 	public void start(Stage stage) {
         Scene baseScene = showEvents(stage); // load the "Show Events" Scene
@@ -226,7 +284,7 @@ public class Display extends Application {
 		cal = new Calendar();
 		cal.addEvent(new Event("test", "description...",
 							   LocalDate.now(), LocalTime.of(6,0)));
-		launch();
+		launch(); // loads start() function
 	}
 
 	
