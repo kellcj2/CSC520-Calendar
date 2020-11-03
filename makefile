@@ -25,8 +25,8 @@ endif
 CLASSES = \
 	Calendar/Event.java\
 	Calendar/Calendar.java\
-	Display.java\
-    ClassDriver.java\
+	Display/Display.java\
+	ClassDriver.java\
 
 #Set default target for make
 default: classes
@@ -45,10 +45,10 @@ classes: $(CLASSES:.java=.class)
 #current directory, then use suffix substitution to remove .class
 #in sub directories. 
 clean:
-	$(RM) *.class $(CLASSES:.java=.class)
+	$(RM) *.class Display/*.class $(CLASSES:.java=.class)
 
 #Feel free to swap this for whatever works you
 #People dont usually use make for java files but yolo
 #Once we squeeze UI stuff in we can prob delete this
 run: default
-	java --module-path $(JAVAFX) --add-modules javafx.controls Display
+	java --module-path $(JAVAFX) --add-modules javafx.controls -cp .:Display/ Display
