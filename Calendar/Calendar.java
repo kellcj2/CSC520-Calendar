@@ -8,12 +8,17 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.DayOfWeek;
 import java.util.Collections;
+//import java.io.Serializable;
 
 public class Calendar {
 	private HashMap<Integer, Event> events;
 
 	public Calendar() {
 		events = new HashMap<Integer, Event>();		
+	}
+
+	public Calendar(HashMap<Integer, Event> cal) {
+		events = cal;
 	}
 
 	public boolean addEvent(Event e) {
@@ -119,9 +124,20 @@ public class Calendar {
 		return eventsThisMonth;
 	}
 
+	public ArrayList<Event> getEventsForDay(int month, int day) {
+		ArrayList<Event> eventsToday = new ArrayList<Event>();
+		for(Event e : this.getAllEvents()) {
+			if(e.date.getMonthValue() == month
+			   && e.date.getDayOfMonth() == day)
+				eventsToday.add(e);
+		}
+		return eventsToday;
+	}
+	/*
 	public ArrayList<Event> getEventsForMonth() {
 		return this.getEventsForMonth(LocalDate.now().getMonthValue());
 	}
+	*/
 	public HashMap<Integer, Event> getAllEventsHashMap() {
 		return this.events;
 	}

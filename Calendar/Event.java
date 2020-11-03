@@ -1,9 +1,10 @@
 package Calendar;
 import java.time.LocalDate;
 import java.time.LocalTime;
-
 import java.util.Random;
-public class Event {
+import java.io.Serializable;
+
+public class Event implements Serializable {
 	public String name;
 	public String description;	
 	public LocalDate date;

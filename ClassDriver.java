@@ -102,7 +102,7 @@ class ClassDriver {
 		}
 
 
-		ArrayList<Event> eventsThisMonth = c.getEventsForMonth();
+		ArrayList<Event> eventsThisMonth = c.getEventsForMonth(11);
 		System.out.println("ALL EVENTS: ");
 		for(int i = 0; i < eventsThisMonth.size(); i++) {
 			System.out.println(eventsThisMonth.get(i));
