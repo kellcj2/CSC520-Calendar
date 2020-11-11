@@ -26,7 +26,13 @@ CLASSES = \
 	Calendar/Event.java\
 	Calendar/Calendar.java\
 	Display/Display.java\
+    NotificationSystem/NotificationSystem.java\
+    NotificationSystem/Notification.java\
+    NotificationSystem/NotificationThread.java\
+    NotificationSystem/NotificationDelegate.java\
+    NotificationSystem/NotificationType.java\
 	ClassDriver.java\
+    
 
 #Set default target for make
 default: classes
@@ -45,7 +51,7 @@ classes: $(CLASSES:.java=.class)
 #current directory, then use suffix substitution to remove .class
 #in sub directories. 
 clean:
-	$(RM) *.class Display/*.class $(CLASSES:.java=.class)
+	$(RM) *.class Display/*.class NotificationSystem/*.class $(CLASSES:.java=.class)
 
 #Feel free to swap this for whatever works you
 #People dont usually use make for java files but yolo

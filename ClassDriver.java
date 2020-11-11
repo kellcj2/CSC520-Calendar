@@ -1,5 +1,10 @@
 import Calendar.Calendar;
 import Calendar.Event;
+import NotificationSystem.NotificationSystem;
+import NotificationSystem.Notification;
+import NotificationSystem.NotificationType;
+
+import java.lang.Thread;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -39,7 +44,7 @@ class ClassDriver {
 		c.printEvents();
 
 		//Remove by event
-		c.removeEvent(e2);
+		//c.removeEvent(e2);
 
 		//Print
 		c.printEvents();
@@ -108,6 +113,53 @@ class ClassDriver {
 			System.out.println(eventsThisMonth.get(i));
 		}
 		
+        LocalDate nowDate = LocalDate.now();
+        LocalTime nowTime = LocalTime.now();
+
+        Notification n = new Notification();
+        Notification n2 = new Notification("Time to eat!", -1, nowDate, 
+                                            nowTime.plusSeconds(3), NotificationType.DESKTOP);
+
+        Notification n3 = new Notification("Time for school!", -1, nowDate, 
+                                            nowTime.plusSeconds(4), NotificationType.EMAIL);
+
+        Notification n4 = new Notification("Time for college!", -1, nowDate, 
+                                            nowTime.plusSeconds(5), NotificationType.DESKTOP);
+
+        Notification n5 = new Notification("Time for sleep!", e.getId(), nowDate, 
+                                            nowTime.plusSeconds(6), NotificationType.DESKTOP);
+
+        Notification n6 = new Notification("Time for sleep part 2 !", e2.getId(), nowDate, 
+                                            nowTime.plusSeconds(7), NotificationType.DESKTOP);
+        //Takes an email / or not / set later  
+        NotificationSystem ns = new NotificationSystem();
+        //NotificationSystem ns = new NotificationSystem("dougeemmanuel1@gmail.com");
+        ns.setEmail("dougeemmanuel1@gmail.com");
+
+        //Add notifs
+        ns.add(n);
+        ns.add(n2);
+        ns.add(n3);
+        ns.add(n4);
+        ns.add(n5);
+        ns.add(n6);
+
+        //Delete notifiations 
+        ns.remove(n4); 
+
+        //Delete notifications by Event Id 
+        ns.removeByEventId(e.getId());  //e's notification is n5
+
+        //Modify notification stuff
+        ns.modifyNotifyType(e2.getId(), NotificationType.DESKTOP);
+
+        //Modify notification stuff
+        ns.modifyMessage(e2.getId(), "plz kill me");
+        
+        while(true) {
+            //Blocking exit here cause faking application =[
+            //Need thread to keep going 
+        }
 	}
 
 }
