@@ -55,7 +55,7 @@ public class Display extends Application {
 	EventHandler<ActionEvent> viewEventButton = new EventHandler<ActionEvent>() {
 			@Override 
 			public void handle(ActionEvent e) {
-				//calendar.hide();
+				calendar.hide();
 				Object o = e.getSource();
 				if(o instanceof Button) {
 					int id = ((int)((Button) o).getUserData()); // get id from button
@@ -168,6 +168,7 @@ public class Display extends Application {
 
 	// searches events for a specific name
 	private Scene searchName(Stage stage, String name) {
+		//calendar.hide();
 		// search for events containing name
 		if(name.length() == 0)
 			return showEvents(stage, cal.getAllEvents());
