@@ -1,7 +1,7 @@
 # CSC520-Calendar
 
 ## Requirements
-Maven
+Maven 3.63 (other versions might work, tested only on 3.63)
 
 ## Usage:
  
