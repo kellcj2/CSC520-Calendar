@@ -509,11 +509,13 @@ public class Display extends Application {
 	// search name
 	// by day, week, month
 	private Scene viewByPrompt(Stage stage) {
+		System.out.println("asdf");		
 		calendar = new DatePicker(); // global DatePicker
-		calendar.setVisible(false); 
+		calendar.setVisible(false);
+		System.out.println("asdfff");		
 		calendar.getStylesheets().add // set css style
 			(getClass().getResource("style.css").toExternalForm());
-		
+
 		GridPane gp = new GridPane();
 		gp.setAlignment(Pos.CENTER);
 		gp.setVgap(15);
@@ -521,7 +523,7 @@ public class Display extends Application {
 
 		Label error = new Label();
 		error.setTextFill(Color.RED);
-		
+
 		DatePicker dateP = new DatePicker();
 
 		ComboBox<String> options = new ComboBox<String>();
@@ -568,6 +570,7 @@ public class Display extends Application {
 
 		Label viewLabel = new Label("View Events by Day, Week, or Month");
 		int rowNum = 0;
+
 		// add everything to gridpane
 		gp.addRow(rowNum++, calBut);
 		gp.addRow(rowNum++, new Label("")); // gap
@@ -847,12 +850,14 @@ public class Display extends Application {
 		cal = new Calendar();
 		notifySys = new NotificationSystem();
 		// test
+		/*
 		cal.addEvent(new Event("test1", "description...",
 							   LocalDate.now(), LocalTime.of(6,0)));
 		cal.addEvent(new Event("test2", "description...",
 							   LocalDate.now(), LocalTime.of(6,30)));
 		cal.addEvent(new Event("test3", "description...",
 							   LocalDate.now(), LocalTime.of(7,30)));
+		*/
 		launch();
 	}
 
