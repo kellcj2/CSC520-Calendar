@@ -155,6 +155,15 @@ public class Calendar {
 		return this.events.size();
 	}
 
+	public ArrayList<Event> getEventByDate(LocalDate d) {
+		ArrayList<Event> todaysEvents = new ArrayList<Event>();
+		for(Event e : getAllEvents()) {
+			if(e.getDate().isEqual(d))
+				todaysEvents.add(e);
+		}
+		return todaysEvents;
+	}
+
 	private Map<DayOfWeek, Integer> getDayMap() {
 		return Map.of(
 			DayOfWeek.SUNDAY, 0,

@@ -27,7 +27,8 @@ def send_email(receiver_email, message):
     with smtplib.SMTP_SSL("smtp.gmail.com", SSL_PORT, context=context) as server:
         server.login(EMAIL_USER, EMAIL_PW)
         #Send email here
-        server.sendmail(EMAIL_USER, receiver_email, message)
+        subject = "Subject: Calendar Notification";
+        server.sendmail(EMAIL_USER, receiver_email, "{}\n\n{}".format(subject, message))
 
 class HandlePost(BaseHTTPRequestHandler):
     #Send happy response back to client

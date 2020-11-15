@@ -13,6 +13,8 @@ public class NotificationThread extends Thread {
     //TODO: Refactor to a event emitter instead
     private NotificationSystem ns;
 
+	private final int WAIT_TIME = 1000; // milliseconds
+
     public NotificationThread(NotificationSystem ns) {
         this.ns = ns;
     }
@@ -20,11 +22,11 @@ public class NotificationThread extends Thread {
     public void run() {
         System.out.println("Notification Thread started");
 
-        //Start thread loop every 1000 milliseconds
+        //Start thread loop every WAIT_TIME milliseconds
         while(true) {
             try {
                 //sleep 1 second then run operations to check notifications 
-                this.sleep(1000);
+                this.sleep(WAIT_TIME);
 
                 //handle thread events
                 this.threadLoop(); 

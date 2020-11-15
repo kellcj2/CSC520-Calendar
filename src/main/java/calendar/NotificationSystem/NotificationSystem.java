@@ -124,6 +124,24 @@ public class NotificationSystem extends Thread {
         return this.notifications;
     }
 
+	public void setNotifications(List<Notification> ns) {
+		this.notifications = ns;
+	}
+
+	public Notification getNotificationById(int id) {
+        synchronized(this.notifications) {
+            Iterator<Notification> it = this.notifications.iterator();            
+            
+            while(it.hasNext()) {
+                Notification n = it.next();
+                if(n.getEventId() == id) {
+                    return n;
+                }
+            }
+			return null;
+        }
+	}
+
     //This notification should be displayed somehow!
     public void notify(Notification n) {
         //Actually notify the user 

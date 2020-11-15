@@ -1,0 +1,16 @@
+.date-picker .month-year-pane{
+    -fx-background-color: aqua;
+    -fx-padding: 5 5 5 5;
+}
+.date-picker .day-name-cell{
+	-fx-background-color: black;
+	-fx-text-fill:aqua;
+
+}
+.date-picker-popup .calendar-grid {
+    -fx-pref-width: 600.0;
+    -fx-pref-height: 600.0;
+}
+.date-picker-popup .spinner-label {
+    /*-fx-font-size: 14.0;*/
+}

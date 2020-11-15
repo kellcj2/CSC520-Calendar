@@ -5,8 +5,9 @@ import NotificationSystem.NotificationType;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import java.io.Serializable;
 
-public class Notification {
+public class Notification implements Serializable {
     private String message;
     private int eventId;
     private LocalDate date;
@@ -28,6 +29,10 @@ public class Notification {
         this.time = time; 
         this.notifyType = type;
     }
+
+	public void setEventId(int id) {
+		this.eventId = id;
+	}
     
     public void setMessage(String message) {
         this.message = message; 
@@ -81,7 +86,7 @@ public class Notification {
         if(this.time.getHour() != otherTime.getHour()) {
             return false;
         } else if(this.time.getMinute() != otherTime.getMinute()) {
-            return false;
+            return false; 
         } else if(this.time.getSecond() != otherTime.getSecond()) {
             return false;
         }
