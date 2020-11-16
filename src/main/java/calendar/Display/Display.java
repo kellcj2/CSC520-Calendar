@@ -836,7 +836,7 @@ public class Display extends Application {
 	public void start(Stage stage) {
 		globalStage = stage;
 		stage.setTitle("CSC 520 Calendar Application");
-
+    calendar = new DatePicker();
 		Scene baseScene;
 		if(!loadConfig()) // if config file doesn't exist
 			baseScene = configScene(stage); // create it
@@ -850,6 +850,7 @@ public class Display extends Application {
 	public static void main(String [] args) {
 		cal = new Calendar();
 		notifySys = new NotificationSystem();
+
 		// test
 		/*
 		cal.addEvent(new Event("test1", "description...",
