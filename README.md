@@ -12,3 +12,5 @@ mvn compile    // just compiles
 mvn javafx:run // runs javafx application
 
 mvn package    // creates jar file in ./target
+
+mvn test       // runs test functions in ./src/test/java/calendar/CalTest.java
