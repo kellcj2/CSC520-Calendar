@@ -109,6 +109,26 @@ public class Display extends Application {
 		//launch(); // loads start() function
 	} 
 
+	// converts LocalTime from 24 hour time to 12 hour String.
+	// ex: 15:30 -> '03:30 PM'
+	private String timeTo12Hour(LocalTime t) {
+		String time = "";
+		if(t.getHour() <= 12) // AM time, don't need to modify anything
+			time = t.toString() + " AM";
+
+		else {  // PM time, convert to 12 hour
+			String minute = Integer.toString(t.getMinute());
+			String hour = Integer.toString(t.getHour() - 12);
+			if(minute.length() == 1) // add '0' in front of minute
+				minute = "0" + minute;
+			if(hour.length() == 1) // add '0' in front of hour
+				hour = "0" + hour;
+			
+			time = hour + ":" +	minute + " PM";
+		}
+		return time;		
+	}
+	
 	// creates the top menubar
 	private MenuBar buildMenuBar(Stage stage) {
 		// create menu items and add them
@@ -262,7 +282,7 @@ public class Display extends Application {
 			Label lName = new Label(ev.getName());
 			lName.setFont(new Font("Arial", 18));
 			Label lDate = new Label(ev.getDate().format(f));
-			Label lTime = new Label(ev.getTime().toString());
+			Label lTime = new Label(timeTo12Hour(ev.getTime()));			
 
 			// create buttons for this event
 			Button modify = new Button("Modify");
@@ -348,7 +368,7 @@ public class Display extends Application {
 
 		ComboBox<String> minutes = new ComboBox<String>();
 		list = minutes.getItems();
-		for(int i = 0; i < 60; i += 5) // add 5, 10, 15, etc to mins
+		for(int i = 0; i < 60; i += 1) // add 5, 10, 15, etc to mins
 			list.add(String.valueOf(i));
 		
 		ComboBox<String> ampm = new ComboBox<String>();
@@ -409,11 +429,8 @@ public class Display extends Application {
 						if(modEvent != null) { // if modifying event
 							Notification oldN =
 								notifySys.getNotificationById(modEvent.getId());
-							if(oldN != null) {
-								nTime = oldN.getTime();
-								nDate = oldN.getDate();
+							if(oldN != null)
 								notifySys.remove(oldN); // remove old notification
-							}
 							cal.removeEvent(id); // remove old event
 						}
 						
@@ -487,7 +504,7 @@ public class Display extends Application {
 		gp.addRow(row++, new Label("Event Name:"), new Label(event.getName()));
 		gp.addRow(row++, new Label("Description:"), new Label(event.getDescription()));
 		gp.addRow(row++, new Label("Date:"), new Label(event.getDate().toString()));
-		gp.addRow(row++, new Label("Time:"), new Label(event.getTime().toString()));
+		gp.addRow(row++, new Label("Time:"), new Label(timeTo12Hour(event.getTime())));
 		// add notification details to GridPane
 		gp.addRow(row++, new Label("")); // space
 		Notification n = notifySys.getNotificationById(event.getId());
