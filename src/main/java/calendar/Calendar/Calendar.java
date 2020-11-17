@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.DayOfWeek;
 import java.util.Collections;
-//import java.io.Serializable;
+import java.util.Comparator;
 
 public class Calendar {
 	private HashMap<Integer, Event> events;
@@ -55,8 +55,13 @@ public class Calendar {
 		return events.get(eventId);
 	}
 
+	// sorts events by LocalDate then LocalTime
 	public ArrayList<Event> getAllEvents() {
-		return new ArrayList<Event>(this.events.values()); 
+		ArrayList<Event> sorted = new ArrayList<Event>(this.events.values());
+		Comparator<Event> comp = new EventComparator();
+		sorted.sort(comp);
+		return sorted;
+		//return new ArrayList<Event>(this.events.values()); 
 	}
 	
 	//Gets events for a 7 day period specified by the month and day.

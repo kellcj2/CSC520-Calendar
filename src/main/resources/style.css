@@ -1,10 +1,10 @@
 .date-picker .month-year-pane{
-    -fx-background-color: aqua;
+    -fx-background-color: grey;
     -fx-padding: 5 5 5 5;
 }
 .date-picker .day-name-cell{
 	-fx-background-color: black;
-	-fx-text-fill:aqua;
+	-fx-text-fill:white;
 
 }
 .date-picker-popup .calendar-grid {

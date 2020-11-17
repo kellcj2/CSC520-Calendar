@@ -195,7 +195,7 @@ public class Display extends Application {
 		
 		ArrayList<Event> find = new ArrayList<Event>();
 		for(Event e : cal.getAllEvents()) {
-			if(e.getName().contains(name))
+			if(e.getName().toLowerCase().contains(name.toLowerCase()))
 				find.add(e);
 		}
 		return showEvents(stage, find); // go to showevents screen
@@ -368,7 +368,7 @@ public class Display extends Application {
 
 		ComboBox<String> minutes = new ComboBox<String>();
 		list = minutes.getItems();
-		for(int i = 0; i < 60; i += 1) // add 5, 10, 15, etc to mins
+		for(int i = 0; i < 60; i += 5) // add 5, 10, 15, etc to mins
 			list.add(String.valueOf(i));
 		
 		ComboBox<String> ampm = new ComboBox<String>();
