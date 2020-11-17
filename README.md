@@ -9,6 +9,7 @@ JavaFX requires different libraries based on the platform, so multiple jar files
 
 * Windows Download: https://github.com/kellcj2/CSC520-Calendar/releases/download/1.0/calendar-1.0-WIN.jar
 * Linux Download: https://github.com/kellcj2/CSC520-Calendar/releases/download/1.0/calendar-1.0-LINUX.jar
+* Mac OS X Download: https://github.com/kellcj2/CSC520-Calendar/releases/download/1.0/calendar-1.0-OSX.jar
 
 ## Building:
  
