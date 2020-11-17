@@ -5,6 +5,7 @@ import java.util.Random;
 import java.io.Serializable;
 
 public class Event implements Serializable {
+	
 	public String name;
 	public String description;	
 	public LocalDate date;
@@ -74,5 +75,6 @@ public class Event implements Serializable {
 	private int generateRandomId() {
 		return (new Random().nextInt(30000));
 	}
+
 }
 

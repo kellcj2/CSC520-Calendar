@@ -1,2 +1,5 @@
 javafx-sdk-11.0.2/
+target/
+config.txt
+dependency-reduced-pom.xml
 .DS_Store
